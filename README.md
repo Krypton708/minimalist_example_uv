@@ -16,17 +16,15 @@ No other setup is needed - `uv run` will automatically create the virtual enviro
 
 ## Running the model without CHAP integration
 
-Before getting a new model to work as part of CHAP, it can be useful to develop and debug it while running it directly on a small dataset from file.
+Before getting a new model to work as part of CHAP, it can be useful to develop and debug it while running it directly on a small dataset from file. Sample data files are included in the `input/` directory.
 
-### Training data
+To quickly test everything works, run:
 
-Create a minimalist input file containing rainfall, temperature and disease cases for a single region and two time points (`input/trainData.csv`):
-
-```csv
-time_period,rainfall,mean_temperature,disease_cases,location
-2023-05,10,30,200,loc1
-2023-06,2,30,100,loc1
+```bash
+python isolated_run.py
 ```
+
+This will train the model and generate predictions using the sample data. You can also run the commands manually:
 
 ### Training the model
 
@@ -48,17 +46,6 @@ def train(train_data: str, model: str):
     reg = LinearRegression()
     reg.fit(features, target)
     joblib.dump(reg, model)
-```
-
-### Future climate data
-
-Create a minimalist future (predicted) climate data file (`input/futureClimateData.csv`). This file contains climate data for what is considered to be future periods (weather forecasts). It naturally contains no disease data:
-
-```csv
-time_period,rainfall,mean_temperature,location
-2023-07,20,20,loc1
-2023-08,30,20,loc1
-2023-09,30,30,loc1
 ```
 
 ### Generating forecasts
@@ -127,6 +114,8 @@ You can use this example as a starting point for your own model. The key files a
 - `MLproject` - Defines how CHAP interacts with your model
 - `pyproject.toml` - Lists your Python dependencies
 - `main.py` - Contains your model's train and predict logic
+- `isolated_run.py` - Script to test the model without CHAP
+- `input/` - Sample training and future climate data
 
 To create a new model from scratch, you can use the `chap init` command:
 
