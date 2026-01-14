@@ -4,7 +4,7 @@ import argparse
 
 import joblib
 import pandas as pd
-from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
 
 
 def train(train_data_path, model_path):
@@ -18,10 +18,10 @@ def train(train_data_path, model_path):
         Path where the trained model will be saved.
     """
     df = pd.read_csv(train_data_path)
-    features = df[["rainfall", "mean_temperature"]].fillna(0)
+    features = df[["rainfall"]].fillna(0)
     target = df["disease_cases"].fillna(0)
 
-    model = LinearRegression()
+    model = RandomForestRegressor()
     model.fit(features, target)
     joblib.dump(model, model_path)
     print(f"Model saved to {model_path}")

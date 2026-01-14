@@ -22,7 +22,7 @@ def predict(model_path, historic_data_path, future_data_path, out_file_path):
     """
     model = joblib.load(model_path)
     future_df = pd.read_csv(future_data_path)
-    features = future_df[["rainfall", "mean_temperature"]].fillna(0)
+    features = future_df[["rainfall"]].fillna(0)
 
     predictions = model.predict(features)
     output_df = future_df[["time_period", "location"]].copy()
